@@ -1,0 +1,4 @@
+*.obj
+*.mtl
+.polyscope.ini
+imgui.ini
