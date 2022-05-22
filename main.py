@@ -2,7 +2,7 @@ import numpy as np
 import polyscope as ps
 from wavefront import *
 
-scene = load_obj('bunnyhead.obj')
+scene = load_obj('monkey.obj', 'monkey.mtl')
 edges_border = scene.numpy_boundary_edges()
 
 print(edges_border)
@@ -17,14 +17,13 @@ ps.init()
 
 ps_mesh = ps.register_surface_mesh("my mesh", vertices, faces)
 
-ps_mesh.set_enabled(False) # disable
 ps_mesh.set_enabled() # default is true
 
 ps_mesh.set_color((0.3, 0.6, 0.8)) # rgb triple on [0,1]
 ps_mesh.set_edge_color((0.8, 0.8, 0.8)) 
 ps_mesh.set_edge_width(1.0)
 ps_mesh.set_smooth_shade(True)
-ps_mesh.set_material("candy")
+# ps_mesh.set_material("wax")
 # ps_mesh.set_transparency(0.5)
 
 param_corner = np.random.rand(ps_mesh.n_corners(),2)
@@ -44,7 +43,7 @@ ps.register_surface_mesh("my mesh2", vertices, faces, enabled=False,
 
 border = ps.register_curve_network("boundary", scene.only_coordinates(), edges_border)
 border.set_color((0.8, 0.8, 0.3))
-                         
+
 ps.show()
 
 # ========================================================================================== creation ps_mesh
@@ -54,3 +53,8 @@ ps.show()
 # polyscope permte peut etre de le faire
 # sinon il faut regarder dans les faces. Les bords qui apparaisse une seul fois sont des bords.
 
+# on construit le laplacien 
+# les bords sont a fixer sur le bord d'une forme convexe (ex: un cercle).
+# pour les fixer (les vertex du bord) on met un 1 dans la diag, des 0 dans le reste de la ligne, 
+# dans le vecteur b (L'u=b) on met la position dans le cercle (ex: un angle de rotation sur le bord du cercle)
+# on fait la resolution du systeme pour obtenir les resultats.
