@@ -1,5 +1,5 @@
-*.obj
-*.mtl
+# *.obj
+# *.mtl
 __pycache__
 .polyscope.ini
 imgui.ini
