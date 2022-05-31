@@ -34,3 +34,6 @@ Le but était de se retrouver avec une équation `LU = b`, où `L` est le Laplac
 ![Tête de lapin avec des bords](./bunnyhead.png)
 
 *Tête de lapin avec les vetrexes du bord en sur brillance*
+
+==Fixer le sommet bord $j$ à $x_j$==
+$\begin{bmatrix} \ddots & \ddots & \ddots & \vdots & \ddots \\ \ddots & \ddots & \ddots & 1 & \ddots \\ \ddots & \ddots & \ddots & \vdots & \ddots \\ \cdots & 1 & \cdots & -4 & \cdots \\ \ddots & \ddots & \ddots & \vdots & \ddots \\\end{bmatrix}\mathbf{U}=\begin{bmatrix}\vdots \\ \vdots \\ \vdots \\ \vdots \\ \vdots \end{bmatrix}$ devient $\begin{bmatrix} \ddots & \ddots & \ddots & \vdots & \ddots \\ \ddots & \ddots & \ddots & 0 & \ddots \\ \ddots & \ddots & \ddots & \vdots & \ddots \\ \cdots & 0 & \cdots & 1 & \cdots \\ \ddots & \ddots & \ddots & \vdots & \ddots \\\end{bmatrix}\mathbf{U}=\begin{bmatrix}\vdots \\ \cdots -x_j \\ \vdots \\ x_j \\ \vdots \end{bmatrix}$ 

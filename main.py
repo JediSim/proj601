@@ -1,16 +1,35 @@
 import numpy as np
 import polyscope as ps
 from wavefront import *
+from param_tutte import *
+from scipy.linalg import solve
 
 #scene = load_obj('monkey.obj', 'monkey.mtl')
-scene = load_obj('bunnyhead.obj')
+scene = load_obj('test.obj')
 edges_border = scene.numpy_boundary_edges()
+
+vertices_border = list(scene.boundary_vertices())
 
 vertices = scene.only_coordinates()
 
 faces = scene.only_faces()
 
 # ========================================================================================== creation ps_mesh
+L = make_laplacian(vertices, faces)
+print(L)
+
+b = np.zeros((L.shape[0],1))
+
+print("edges_border : ",vertices_border)
+
+L2, b2 = fix_bord(L, vertices_border,b)
+
+print("L2 : ",L2)
+print("b2 : ",b2)
+
+x = solve(L2.toarray(), b2)
+print("x : ",x)
+# exit(0)
 
 ps.init()
 
@@ -25,15 +44,8 @@ ps_mesh.set_smooth_shade(True)
 # ps_mesh.set_material("wax")
 # ps_mesh.set_transparency(0.5)
 
-param_corner = np.random.rand(ps_mesh.n_corners(), 2)
-cA = (0.1, 0.2, 0.3)
-cB = (0.4, 0.5, 0.6)
-ps_mesh.add_parameterization_quantity("rand param corner3", param_corner, defined_on='corners',
-                                      coords_type='unit', viz_style='grid', grid_colors=(cA, cB))
 
-param_vert = np.random.rand(len(vertices), 2)
-ps_mesh.add_parameterization_quantity("rand param", param_vert, enabled=True)
-
+ps_mesh.add_parameterization_quantity("rand param corner", np.array(x), defined_on='corners')
 # alternately:
 ps.register_surface_mesh("my mesh2", vertices, faces, enabled=False,
                          color=(1., 0., 0.), edge_color=((0.8, 0.8, 0.8)),
